@@ -1,0 +1,215 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afd8e51f511d7e14d9c9ddeb2cda285a, type: 3}
+  m_Name: Player_Input
+  m_EditorClassIdentifier: 
+  nameInput: 
+  axisMovementX:
+    nameAction: Axis Movement X
+    key_KeyBoard: 119
+    axis_KeyBoard: VERTICAL_KEYBOARD
+    key_GamePad: 0
+    axis_GamePad: Horizontal
+    isAnAxisBool: 1
+    finalNumberToAxis: 0.5
+    registerEntry: 1
+    isPassDownBool: 0
+  axisMovementY:
+    nameAction: Axis Movement Y
+    key_KeyBoard: 0
+    axis_KeyBoard: HORIZONTAL_KEYBOARD
+    key_GamePad: 0
+    axis_GamePad: Vertical
+    isAnAxisBool: 1
+    finalNumberToAxis: 0.5
+    registerEntry: 1
+    isPassDownBool: 0
+  axisCameraX:
+    nameAction: Axis Camera X
+    key_KeyBoard: 0
+    axis_KeyBoard: ViewKeyBoard_X
+    key_GamePad: 0
+    axis_GamePad: ViewHorizontal
+    isAnAxisBool: 0
+    finalNumberToAxis: 0
+    registerEntry: 0
+    isPassDownBool: 0
+  axisCameraY:
+    nameAction: Axis Camera Y
+    key_KeyBoard: 0
+    axis_KeyBoard: ViewKeyBoard_Y
+    key_GamePad: 0
+    axis_GamePad: ViewVertical
+    isAnAxisBool: 1
+    finalNumberToAxis: 0
+    registerEntry: 0
+    isPassDownBool: 0
+  jumpBtn:
+    nameAction: Jump BTN
+    key_KeyBoard: 32
+    axis_KeyBoard: 
+    key_GamePad: 330
+    axis_GamePad: 
+    isAnAxisBool: 0
+    finalNumberToAxis: 0
+    registerEntry: 0
+    isPassDownBool: 1
+  crouchButton:
+    nameAction: CrouchBtn
+    key_KeyBoard: 99
+    axis_KeyBoard: 
+    key_GamePad: 331
+    axis_GamePad: 
+    isAnAxisBool: 0
+    finalNumberToAxis: 0
+    registerEntry: 1
+    isPassDownBool: 0
+  sprintButton:
+    nameAction: SprintBtn
+    key_KeyBoard: 40
+    axis_KeyBoard: 
+    key_GamePad: 338
+    axis_GamePad: 
+    isAnAxisBool: 0
+    finalNumberToAxis: 0
+    registerEntry: 0
+    isPassDownBool: 0
+  fireButton:
+    nameAction: FireBtn
+    key_KeyBoard: 323
+    axis_KeyBoard: FireButton_KEYBOARD
+    key_GamePad: 0
+    axis_GamePad: Fire1
+    isAnAxisBool: 0
+    finalNumberToAxis: 0
+    registerEntry: 1
+    isPassDownBool: 1
+  aimButton:
+    nameAction: AimBtn
+    key_KeyBoard: 324
+    axis_KeyBoard: AimButton_KEYBOARD
+    key_GamePad: 0
+    axis_GamePad: Aim
+    isAnAxisBool: 0
+    finalNumberToAxis: 0
+    registerEntry: 0
+    isPassDownBool: 1
+  dashButton:
+    nameAction: 
+    key_KeyBoard: 0
+    axis_KeyBoard: 
+    key_GamePad: 0
+    axis_GamePad: 
+    isAnAxisBool: 0
+    finalNumberToAxis: 0
+    registerEntry: 0
+    isPassDownBool: 0
+  hitButton:
+    nameAction: 
+    key_KeyBoard: 0
+    axis_KeyBoard: 
+    key_GamePad: 0
+    axis_GamePad: 
+    isAnAxisBool: 0
+    finalNumberToAxis: 0
+    registerEntry: 0
+    isPassDownBool: 0
+  hitAltButton:
+    nameAction: 
+    key_KeyBoard: 0
+    axis_KeyBoard: 
+    key_GamePad: 0
+    axis_GamePad: 
+    isAnAxisBool: 0
+    finalNumberToAxis: 0
+    registerEntry: 0
+    isPassDownBool: 0
+  throwableButton:
+    nameAction: Throwable
+    key_KeyBoard: 103
+    axis_KeyBoard: 
+    key_GamePad: 335
+    axis_GamePad: 
+    isAnAxisBool: 0
+    finalNumberToAxis: 0
+    registerEntry: 0
+    isPassDownBool: 1
+  alternativeThrowableButton:
+    nameAction: 
+    key_KeyBoard: 0
+    axis_KeyBoard: 
+    key_GamePad: 0
+    axis_GamePad: 
+    isAnAxisBool: 0
+    finalNumberToAxis: 0
+    registerEntry: 0
+    isPassDownBool: 0
+  reloadButton:
+    nameAction: Reload Button
+    key_KeyBoard: 114
+    axis_KeyBoard: 
+    key_GamePad: 0
+    axis_GamePad: 
+    isAnAxisBool: 0
+    finalNumberToAxis: 0
+    registerEntry: 0
+    isPassDownBool: 1
+  switchButton:
+    nameAction: Switch Button
+    key_KeyBoard: 0
+    axis_KeyBoard: 
+    key_GamePad: 333
+    axis_GamePad: SwitchButton
+    isAnAxisBool: 0
+    finalNumberToAxis: 0
+    registerEntry: 0
+    isPassDownBool: 0
+  axisCrossHorizontal:
+    nameAction: 
+    key_KeyBoard: 0
+    axis_KeyBoard: 
+    key_GamePad: 0
+    axis_GamePad: 
+    isAnAxisBool: 0
+    finalNumberToAxis: 0
+    registerEntry: 0
+    isPassDownBool: 0
+  axisCrossVertical:
+    nameAction: 
+    key_KeyBoard: 0
+    axis_KeyBoard: 
+    key_GamePad: 0
+    axis_GamePad: 
+    isAnAxisBool: 0
+    finalNumberToAxis: 0
+    registerEntry: 0
+    isPassDownBool: 0
+  escapeButton:
+    nameAction: 
+    key_KeyBoard: 0
+    axis_KeyBoard: 
+    key_GamePad: 0
+    axis_GamePad: 
+    isAnAxisBool: 0
+    finalNumberToAxis: 0
+    registerEntry: 0
+    isPassDownBool: 0
+  sprintBtn:
+    nameAction: 'Sprint '
+    key_KeyBoard: 49
+    axis_KeyBoard: 
+    key_GamePad: 0
+    axis_GamePad: 
+    isAnAxisBool: 0
+    finalNumberToAxis: 0
+    registerEntry: 0
+    isPassDownBool: 0

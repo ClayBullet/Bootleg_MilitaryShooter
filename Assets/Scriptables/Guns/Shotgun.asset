@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48645181c8d3a2347bf081c810286d50, type: 3}
+  m_Name: Shotgun
+  m_EditorClassIdentifier: 
+  weaponName: Shotgun
+  damageBody: 0
+  damageHead: 0
+  damageEnemy: 0
+  limitMagazine: 0
+  delayForReload: 0
+  delayForCadence: 0
+  delayAfterShoot: 0
+  fieldOfView: 0
+  objectWeapon: {fileID: 2181227215195432013, guid: 3c53a3180f092ae499da4be8131b1895, type: 3}
+  pickableWeapon: {fileID: 2181227215195432013, guid: 3c53a3180f092ae499da4be8131b1895, type: 3}
+  throwWeapon: {fileID: 0}
+  weaponOffset: {x: 0, y: 0, z: 0}
+  kindWeapon: 1
+  throwableForce: 0
+  distanceEnemy: 0
+  burstFire: 0
+  automaticFire: 0
+  hearNoiseAI: 0
+  modeShoot: 0
+  projectileGun: {fileID: 0}
+  speedProjectile: 0
+  limitLife: 0
+  timeShake: 0.05
+  forceShake: 0.05
+  holdTheTriggerButtonForShootBool: 0
+  maxTimeForShootBool: 0
+  timeForFreezeWeapon: 0
+  uniqueBehaiourWeaponIsAvailableBool: 0
+  clipShoot: {fileID: 0}
+  clipHit: {fileID: 0}
+  distanceToShoot: 0
