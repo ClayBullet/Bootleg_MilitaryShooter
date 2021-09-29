@@ -11,7 +11,7 @@ public class WeaponSlot : MonoBehaviour
     [SerializeField] private ParticleSystem sysParticle;
     //[SerializeField] private GameObject emptyShell;
     public GameObject currentOwner;
-
+    public Light currentLight;
     private Animator _animator;
     public readonly string attackAnim = "Attack";
     public readonly string aimAnim = "Aim";
@@ -58,6 +58,18 @@ public class WeaponSlot : MonoBehaviour
 
         go.SetActive(true);
         go.GetComponent<Rigidbody>().AddForce(transform.right * 2f, ForceMode.Impulse);
+    }
+
+    public void TurnLight(bool light)
+    {
+        if (light)
+        {
+            currentLight.intensity = 100;
+        }
+        else
+        {
+            currentLight.intensity = 0;
+        }
     }
 
     public void ActivateEffects()

@@ -38,6 +38,13 @@ public class WeaponPlayerManager : MonoBehaviour
     [Space]
     [SerializeField] private Transform crosshairRect;
 
+    public Transform currentCrosshairTransform
+    {
+        get
+        {
+            return crosshairRect;
+        }
+    }
     private bool _reloadButtonBool;
     private bool _cadenceBool;
 
@@ -61,6 +68,7 @@ public class WeaponPlayerManager : MonoBehaviour
     [Header("THROWABLE CHARACTER")]
     [Space]
     [SerializeField] private ThrowScriptable throwableWeapon;
+    [SerializeField] private ThrowScriptable alternativeThrowableWeapon;
     [SerializeField] private Transform respawnThrowableObject;
 
     [Header("IS WEAPON PICKABLE")]
@@ -121,6 +129,7 @@ public class WeaponPlayerManager : MonoBehaviour
         GameManager.managerGame.managerInput.DownPress_ThrowButton += Throw_Action;
         GameManager.managerGame.managerInput.DownPress_ReloadButton += Reload_Action;
         GameManager.managerGame.managerInput.DownPress_SwitchButton += ChangeGun;
+        GameManager.managerGame.managerInput.DownPress_AlternativeThrowButton += AlternativeThrowable_Action;
     }
 
     public void TakeRewindForThis(GameObject slotObj)
@@ -179,6 +188,7 @@ public class WeaponPlayerManager : MonoBehaviour
 
             }
         }
+
         _currentWeaponModel = go;
         currentWeaponMainly = gun;
 
@@ -194,6 +204,7 @@ public class WeaponPlayerManager : MonoBehaviour
             _currentSlotWeapon.EnableSlider();
         }
 
+        GameManager.managerGame.playerInventory.PrepareTheCurrentMagazine(gun);
 
     }
 
@@ -222,10 +233,18 @@ public class WeaponPlayerManager : MonoBehaviour
 
     }
 
+    public void AlternativeThrowable_Action()
+    {
+        if (!_dontShootGeneralBool) return;
+
+        AlternativeThrowableSystem();
+    }
+
     public void Reload_Action()
     {
         if (!_dontShootGeneralBool) return;
 
+        GameManager.managerGame.playerInventory.ReloadTheGun(currentWeaponMainly);
         if (_reloadButtonBool)
             StartCoroutine(ReloadCoroutine());
     }
@@ -237,19 +256,22 @@ public class WeaponPlayerManager : MonoBehaviour
 
     private void InterfaceGun()
     {
-        _interfaceWeapon.MagazineRepresentation(currentWeaponMainly);
+       // _interfaceWeapon.MagazineRepresentation(currentWeaponMainly);
     }
     #region NormalWeapons
 
     public void AvaibleForShoot()
     {
-        if(_playerWeaponGun != null)
+
+        if (!GameManager.managerGame.playerInventory.checkCurrentAmmo(currentWeaponMainly)) return;
+        if(_playerWeaponGun != null && currentWeaponMainly != null && playerCamera.transform != null)
+        {
+
             _playerWeaponGun.MainCameraMovement(playerCamera.transform, currentWeaponMainly.forceShake, currentWeaponMainly.timeShake);
-        
+        }
+
         Ray ray = playerCamera.ScreenPointToRay(crosshairRect.transform.position);
 
-       
-     
         switch (currentWeaponMainly.modeShoot)
         {
             case ShootMode.Instantiation:
@@ -265,12 +287,20 @@ public class WeaponPlayerManager : MonoBehaviour
         if (concretActionWithTheRay != null)
             concretActionWithTheRay.Invoke(ray, gunLayer);
 
-        StartCoroutine(CadenceDelay());          
-        
+
+
+        StartCoroutine(CadenceDelay());
+        StartCoroutine(TurnOutTheLights());
         
 
     }
 
+    private IEnumerator TurnOutTheLights()
+    {
+        _currentSlotWeapon.TurnLight(true);
+        yield return new WaitForSeconds(.1f);
+        _currentSlotWeapon.TurnLight(false);
+    }
 
     private IEnumerator CadenceDelay()
     {
@@ -334,6 +364,18 @@ public class WeaponPlayerManager : MonoBehaviour
             GameObject go = Instantiate(throwableWeapon.throwPrefab, respawnThrowableObject.transform.position, transform.rotation);
             go.GetComponent<Rigidbody>().AddForce(playerCamera.transform.forward * throwableWeapon.throwableForce, ForceMode.Impulse);
             StartCoroutine(go.GetComponent<ThrowObjectPlayer>().WeaponDelay_Coroutine(throwableWeapon));
+            GameManager.managerGame.playerInventory.AddThrowable(throwableWeapon, -1);
+        }
+    }
+
+    private void AlternativeThrowableSystem()
+    {
+        if(alternativeThrowableWeapon != null)
+        {
+            GameObject go = Instantiate(alternativeThrowableWeapon.throwPrefab, respawnThrowableObject.transform.position, transform.rotation);
+            go.GetComponent<Rigidbody>().AddForce(playerCamera.transform.forward * alternativeThrowableWeapon.throwableForce, ForceMode.Impulse);
+            StartCoroutine(go.GetComponent<ThrowObjectPlayer>().WeaponDelay_Coroutine(alternativeThrowableWeapon));
+            GameManager.managerGame.playerInventory.AddThrowable(alternativeThrowableWeapon, -1);
         }
     }
     #endregion
@@ -364,41 +406,41 @@ public class WeaponPlayerManager : MonoBehaviour
 
     private int takeCorrectBullets(WeaponScriptable gunScriptable)
     {
-        switch (gunScriptable.kindWeapon)
-        {
-            case AmmoKind.pistolAmmo:
-                return GameManager.managerGame.playerInventory.ammoPistol;
-            case AmmoKind.rifleAmmo:
-                return GameManager.managerGame.playerInventory.ammoRifle;
-            case AmmoKind.shotgunAmmo:
-                return GameManager.managerGame.playerInventory.ammoShotgun;
-            case AmmoKind.submachineAmmo:
-                return GameManager.managerGame.playerInventory.ammoSubmachine;
-        }
+        //switch (gunScriptable.kindWeapon)
+        //{
+        //    case AmmoKind.pistolAmmo:
+        //        return GameManager.managerGame.playerInventory.ammoPistol;
+        //    case AmmoKind.rifleAmmo:
+        //        return GameManager.managerGame.playerInventory.ammoRifle;
+        //    case AmmoKind.shotgunAmmo:
+        //        return GameManager.managerGame.playerInventory.ammoShotgun;
+        //    case AmmoKind.submachineAmmo:
+        //        return GameManager.managerGame.playerInventory.ammoSubmachine;
+        //}
 
         return 0;
     }
 
     private void ReduceBulletType(WeaponScriptable gunScriptable)
     {
-        switch (gunScriptable.kindWeapon)
-        {
-            case AmmoKind.pistolAmmo:
-                GameManager.managerGame.playerInventory.ammoPistol--;
-                break;
-            case AmmoKind.rifleAmmo:
-                GameManager.managerGame.playerInventory.ammoRifle--;
+        //switch (gunScriptable.kindWeapon)
+        //{
+        //    case AmmoKind.pistolAmmo:
+        //        GameManager.managerGame.playerInventory.ammoPistol--;
+        //        break;
+        //    case AmmoKind.rifleAmmo:
+        //        GameManager.managerGame.playerInventory.ammoRifle--;
 
-                break;
-            case AmmoKind.shotgunAmmo:
-                GameManager.managerGame.playerInventory.ammoShotgun--;
+        //        break;
+        //    case AmmoKind.shotgunAmmo:
+        //        GameManager.managerGame.playerInventory.ammoShotgun--;
 
-                break;
-            case AmmoKind.submachineAmmo:
-                GameManager.managerGame.playerInventory.ammoSubmachine--;
+        //        break;
+        //    case AmmoKind.submachineAmmo:
+        //        GameManager.managerGame.playerInventory.ammoSubmachine--;
 
-                break;
-        }
+        //        break;
+        //}
     }
     #endregion
 

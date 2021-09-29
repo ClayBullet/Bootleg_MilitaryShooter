@@ -62,5 +62,6 @@ public enum PossibleActions
     Stun,
     Cover,
     Chase,
-    Flee
+    Flee,
+    Scripted
 }

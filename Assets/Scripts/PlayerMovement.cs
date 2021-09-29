@@ -64,6 +64,10 @@ public class PlayerMovement : MonoBehaviour
     protected bool _breakFallEffectBool;
 
     protected bool _delayForCheckNewJumping;
+
+    private bool _isMovingFowardBool, _isMovingBackBool, _isMovingRightBool, _isMovingLeftBool;
+    private bool _isCurrentPutTheSprint;
+
     protected void Awake()
     {
         rigibBodyPlayer = GetComponent<Rigidbody>();
@@ -89,32 +93,24 @@ public class PlayerMovement : MonoBehaviour
         GameManager.managerGame.managerInput.left_Axis_Move += MoveLeft;
         GameManager.managerGame.managerInput.left_Axis_Move += FootStep;
         GameManager.managerGame.managerInput.DownPress_JumpButton += JumpCharacter;
-
-
+        GameManager.managerGame.managerInput.DownPress_SprintBtn += SprintEnable;
+        GameManager.managerGame.managerInput.UpPress_SprintBtn += SprintDisable;
+        GameManager.managerGame.managerInput.free_Horizontal_Axis += StopRight;
+        GameManager.managerGame.managerInput.free_Horizontal_Axis += StopLeft;
+        GameManager.managerGame.managerInput.free_Vertical_Axis += StopForward;
+        GameManager.managerGame.managerInput.free_Vertical_Axis += StopBackward;
     }
+
+
+    
 
 
     protected void Update()
     {
-
-        
-            MovementAxis();
-            //   SprintSystem();
-
-
-       
-            
-        
-
-
-
-
-
+           MovementAxis();
+ 
         if (!lowerThanMyFeetsBool() && !_isFallingBool && isInFloorBool) FallDescent();
-           
-        
-
-
+ 
     }
 
 
@@ -124,28 +120,49 @@ public class PlayerMovement : MonoBehaviour
  
     private void SprintEnable()
     {
-        speedMovement += incrementSpeed;
+        if(!_isMovingBackBool && !_isMovingLeftBool && !_isMovingRightBool && _isMovingFowardBool)
+        {
+            speedMovement += incrementSpeed;
+            _isCurrentPutTheSprint = true;
+        }    
     }
 
     private void SprintDisable()
     {
-        speedMovement -= incrementSpeed;
+        if (_isCurrentPutTheSprint)
+        {
+            speedMovement -= incrementSpeed;
+            _isCurrentPutTheSprint = false;
+        }
+           
     }
 
     protected virtual void MoveRight() {
             transform.Translate(transform.right * Time.deltaTime * speedMovement, Space.World);
+            _isMovingRightBool = true;
     }
+
+    protected virtual void StopRight() { _isMovingRightBool = false;   }
     protected virtual void MoveLeft() {
             transform.Translate(-transform.right * Time.deltaTime * speedMovement, Space.World);
+        _isMovingLeftBool = true;
     }
+    protected virtual void StopLeft(){ _isMovingLeftBool = false; }
     protected void MoveForward()
     {
             transform.Translate(transform.forward * Time.deltaTime * speedMovement, Space.World);
+        _isMovingFowardBool = true;
+        
     }
+    protected virtual void StopForward(){ _isMovingFowardBool = false;    }
     protected void MoveBackWard()
     {
-            transform.Translate(-transform.forward * Time.deltaTime * speedMovement, Space.World);
+         transform.Translate(-transform.forward * Time.deltaTime * speedMovement, Space.World);
+        _isMovingBackBool = true;
     }
+
+    protected virtual void StopBackward(){ _isMovingBackBool = false; }
+
     protected void FootStep()
     {
            // GameManager.managerGame.stepSoundFoot.Movement();

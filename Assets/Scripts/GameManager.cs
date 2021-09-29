@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public FootStepSound stepSoundFoot;
     [HideInInspector] public MatrixCombatResolution resolutionCombatMatrix;
     [HideInInspector] public PathfindingImprovement improvementPathfiding;
-
+    [HideInInspector] public CommandController controllerCommand;
     private void Awake()
     {
         if (managerGame == null)

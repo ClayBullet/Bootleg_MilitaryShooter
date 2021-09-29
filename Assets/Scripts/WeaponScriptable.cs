@@ -40,7 +40,6 @@ public class WeaponScriptable : ScriptableObject
     [Space]
     public Vector3 weaponOffset;
 
-    public AmmoKind kindWeapon;
     [Header("WEAPON THROWABLE")]
     [Space]
     public float throwableForce;
@@ -99,6 +98,7 @@ public class WeaponScriptable : ScriptableObject
     [Space]
     public Sprite spriteBullet;
 
+    
 }
 public enum ShootMode
 {

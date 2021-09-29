@@ -38,22 +38,22 @@ public class WeaponInterface : MonoBehaviour
 
 	public void UpdateMagazineState(WeaponScriptable gun)
     {
-        switch (gun.kindWeapon)
-        {
-			case AmmoKind.pistolAmmo:
-				ammoText.text = GameManager.managerGame.playerInventory.ammoPistol.ToString();
-				break;
-			case AmmoKind.rifleAmmo:
-				ammoText.text = GameManager.managerGame.playerInventory.ammoRifle.ToString();
-				break;
-			case AmmoKind.shotgunAmmo:
-				ammoText.text = GameManager.managerGame.playerInventory.ammoShotgun.ToString();
-				break;
+   //     switch (gun.kindWeapon)
+   //     {
+			//case AmmoKind.pistolAmmo:
+			//	ammoText.text = GameManager.managerGame.playerInventory.ammoPistol.ToString();
+			//	break;
+			//case AmmoKind.rifleAmmo:
+			//	ammoText.text = GameManager.managerGame.playerInventory.ammoRifle.ToString();
+			//	break;
+			//case AmmoKind.shotgunAmmo:
+			//	ammoText.text = GameManager.managerGame.playerInventory.ammoShotgun.ToString();
+			//	break;
 			
-			case AmmoKind.submachineAmmo:
-				ammoText.text = GameManager.managerGame.playerInventory.ammoSubmachine.ToString();
-				break;
-        }
+			//case AmmoKind.submachineAmmo:
+			//	ammoText.text = GameManager.managerGame.playerInventory.ammoSubmachine.ToString();
+			//	break;
+   //     }
     }
 	#endregion
 	

@@ -42,6 +42,7 @@ public class InputManager : MonoBehaviour
     public Action OnPressed_RegularAction, UpPress_RegularAction, DownPress_RegularAction;
     public Action OnPressed_AltAction, UpPress_AltAction, DownPress_AltAction;
 
+    public Action OnPressed_HitButton, UpPress_HitButton, DownPress_HitButton;
 
 
     #endregion
@@ -80,6 +81,7 @@ public class InputManager : MonoBehaviour
             Shoot_Action();
             Reload_Action();
             //Grabble_Action();
+            HitAction();
             Sight_Action();
             Throw_Action();
             Grabble_Action();
@@ -136,11 +138,11 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    private void RegularAttack_Action()
+    private void HitAction()
     {
         if (input.hitButton.isRegisterTheCurrentActionBool(EntryRegister.Key_Down))
         {
-            DownPress_RegularAction.Invoke();
+            DownPress_HitButton.Invoke();
         }
     }
 
@@ -159,17 +161,35 @@ public class InputManager : MonoBehaviour
     }
 
     public void Camera_Axis()
-    {   
-        cameraAxis.Invoke(input.axisCameraX.registerAxis(), input.axisCameraY.registerAxis());
+    {
+
+        float x = input.axisCameraX.registerAxis();
+        float y = input.axisCameraY.registerAxis();
+
+        if(x != 0 || y != 0)
+            cameraAxis.Invoke(x, y);
     }
 
     public void Character_Movement()
     {
         if (input.axisMovementX.isRegisterTheCurrentActionBool(EntryRegister.Key_UP)) right_Axis_Move.Invoke();
         else if (input.axisMovementX.isRegisterTheCurrentActionBool(EntryRegister.Key_Down)) left_Axis_Move.Invoke();
+        else
+        {
+                free_Horizontal_Axis.Invoke();
+            
+        }
+
 
         if (input.axisMovementY.isRegisterTheCurrentActionBool(EntryRegister.Key_UP)) down_Axis_Move.Invoke();
         else if (input.axisMovementY.isRegisterTheCurrentActionBool(EntryRegister.Key_Down)) up_Axis_Move.Invoke();
+        else
+        {
+          
+                
+                    free_Vertical_Axis.Invoke();
+            
+        }
 
         if(movementAxis != null)
         {
@@ -207,6 +227,10 @@ public class InputManager : MonoBehaviour
         if (input.throwableButton.isRegisterTheCurrentActionBool(EntryRegister.Key_Down))
         {
             DownPress_ThrowButton.Invoke();
+        }
+        else if (input.alternativeThrowableButton.isRegisterTheCurrentActionBool(EntryRegister.Key_Down))
+        {
+            DownPress_AlternativeThrowButton.Invoke();
         }
     }
 
@@ -329,10 +353,12 @@ public class InputActions
         {
             return false;
         }
-        else
+        else if(Input.GetJoystickNames().Length > 0 && Input.GetJoystickNames()[0] != "")
         {
             return true;
         }
+
+        return false;
     }
 
     public bool isRegisterTheCurrentActionBool(EntryRegister register)
@@ -416,16 +442,20 @@ public class InputActions
         else
         {
             if (axis_KeyBoard != "")
+            {
                 return Input.GetAxis(axis_KeyBoard);
+            }              
             else
             {
-                return Input.GetKeyDown(key_KeyBoard) ? 0 : 1;
+                return Input.GetKeyDown(key_KeyBoard) ? -1 : 1;
 
             }
                 
         }
 
     }
+
+ 
 
 }
 public enum EntryRegister { Key_UP, Key_Down, Key_Stay}

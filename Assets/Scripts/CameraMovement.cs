@@ -40,35 +40,31 @@ public class CameraMovement : MonoBehaviour
 
     private void MovementCamera(float x, float y)
     {
-       
-
-            if (avoidAccessToTheCameraMovemenetBool) return;
+          if (avoidAccessToTheCameraMovemenetBool) return;
 
             Vector3 currentMovement = new Vector3(x, y);
            
 
             if (!aimCameraBool)
-                    currentSensibility = (sensibility * Time.deltaTime);
+                    currentSensibility = (sensibility);
                 else
-                    currentSensibility = (sensibility * Time.deltaTime) / 4;
+                    currentSensibility = (sensibility) / 4;
 
 
 
 
-                currentMovement *= currentSensibility;
               
-                axisMovement.x += Mathf.Lerp(_xPreviousSmooth, currentMovement.x, Time.deltaTime * speedCamera);
-                axisMovement.y += Mathf.Lerp(_yPreviousSmooth, currentMovement.y, Time.deltaTime * speedCamera);
+                axisMovement.x += Mathf.Lerp(_xPreviousSmooth, currentMovement.x, Time.deltaTime * currentSensibility);
+                axisMovement.y += Mathf.Lerp(_yPreviousSmooth, currentMovement.y, Time.deltaTime * currentSensibility);
 
                 axisMovement.y = Mathf.Clamp(axisMovement.y, clampCamera.x, clampCamera.y);
 
                 playerCamera.rotation = Quaternion.Euler(new Vector3(axisMovement.y, axisMovement.x * -1, 0f));
 
-                transform.rotation = Quaternion.Euler(0f, axisMovement.x * -1, 0f);
+                transform.localRotation = Quaternion.Euler(0f, axisMovement.x * -1, 0f);
 
                 _xPreviousSmooth = currentMovement.x;
                 _yPreviousSmooth = currentMovement.y;
-
 
 
         //if (!specialCameraModeBool)
